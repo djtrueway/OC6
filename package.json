@@ -1,0 +1,20 @@
+{
+  "name": "oc6",
+  "version": "1.0.0",
+  "description": "un jeu de plateau",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djtrueway/OC6.git"
+  },
+  "author": "Peterson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/djtrueway/OC6/issues"
+  },
+  "homepage": "https://github.com/djtrueway/OC6#readme",
+  "devDependencies": {}
+}
