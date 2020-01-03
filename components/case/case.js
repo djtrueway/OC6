@@ -15,4 +15,9 @@ class Case{
 	showPlayer(){
 		this.DOM.className = "player1";
 	}
+	
+	showPlayer2(){
+		this.DOM.className = "player2";
+	}
 }
+
