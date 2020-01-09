@@ -5,10 +5,10 @@ class Case{
 	 * @param  {HTMLelement} DOMcontainer [description]
 	 * @return {[type]}              [description]
 	 */
-	constructor(index, DOMcontainer){
-		window.cases.push(this);
-		this.id = index;
-		this.DOM = document.createElement("case");
+	constructor(row, col, DOMcontainer){
+		this.id								= row+col;
+		window.cases[this.id]	=this;
+		this.DOM							= document.createElement("case");
 		DOMcontainer.appendChild(this.DOM);
 	}
 
