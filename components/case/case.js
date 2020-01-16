@@ -13,6 +13,9 @@ class Case{
 		this.DOM.onclick = this.click.bind(this)
 
 		DOMcontainer.appendChild(this.DOM);
+		this.player		= null;
+		this.obstacle	= false;
+		this.weapon		= null;
 	}
 
 	click(){
@@ -21,6 +24,30 @@ class Case{
 	
 	showPlayer(){
 		
+	}
+
+	update(things, newValue=null){
+		switch (things) {
+			case "player":
+				this.player = newValue;
+				break;
+			case "noMorePlayer":
+				this.player = null;
+				break;
+			case "obstacle":
+				this.obstacle = true;
+				break;
+			case "weapon":
+				this.weapon = newValue;
+				break;
+			default:
+				// statements_def
+				break;
+		}
+		if (this.player !== null)   return this.DOM.className = "player"+newValue;
+		if (this.weapon !== null)   return this.DOM.className = "weapon_"+this.weapon;
+		if (this.obstacle) return this.DOM.className = "obstacle";
+		this.DOM.className = "empty";
 	}
 	
 }
