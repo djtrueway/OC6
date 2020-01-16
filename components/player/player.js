@@ -24,5 +24,7 @@ class Player{
 
   }
 
-  place(){}
+  place(){
+   cases.a0.DOM.innerHTML = this.name
+  }
 }

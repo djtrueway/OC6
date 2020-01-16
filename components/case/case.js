@@ -9,15 +9,19 @@ class Case{
 		this.id								= row+col;
 		window.cases[this.id]	=this;
 		this.DOM							= document.createElement("case");
+		this.DOM.innerHTML = this.id;
+		this.DOM.onclick = this.click.bind(this)
+
 		DOMcontainer.appendChild(this.DOM);
 	}
 
-	showPlayer(){
-		this.DOM.className = "player1";
+	click(){
+		alert(this.id)
 	}
 	
-	showPlayer2(){
-		this.DOM.className = "player2";
+	showPlayer(){
+		
 	}
+	
 }
 

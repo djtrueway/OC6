@@ -39,13 +39,14 @@ class GamePlay{
     //on places les joueurs
     //on verifie si case dispo
     window.player1.place();
+    window.player2.place()
 
 
   }
 
 
   placePlayer(){
-
+    
   }
   placeWeapon(){
 
