@@ -27,4 +27,8 @@ class Player{
   place(){
    // cases.a0.DOM.innerHTML = this.name
   }
+
+  showMove(){
+    
+   }
 }

@@ -67,6 +67,7 @@ class GamePlay{
     playerCase = this.getItemsPostion(1, forbidden)[0];
     window.cases[playerCase].update("player", 2);
     new Player({ "id":2, ...this.convertPosition(playerCase)});
+    window.player1.showMove()
   }
 
   /**
