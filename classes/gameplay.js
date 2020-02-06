@@ -6,7 +6,12 @@ class GamePlay{
    * @param  {integer} numberOfObstacles [description]
    * @return {void} 
    */
-  constructor(numberOfCol, numberOfRow, numberOfObstacles){
+  constructor(game){
+
+    let numberOfCol       = game.row;
+    let numberOfRow       = game.col;
+    let numberOfObstacles = game.obstacles;
+
     //on créer le plaeau et les cases du plateau
     let board         = document.createElement("div");
     board.id          = "plateau";
@@ -15,11 +20,11 @@ class GamePlay{
     this.numberOfRow = numberOfRow;
     let col = 0;
     let row = 0;
-    this.rowConversion = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o"];
+    
     window.cases = {};
     const numberOfCases = numberOfCol * numberOfRow;
     for (let i = 0; i < numberOfCases; i++) {
-      new Case(this.rowConversion[row], col, board);
+      new Case(rowConversion[row], col, board);
       col++;
       if (col >= numberOfCol) {
         col = 0;
@@ -37,7 +42,7 @@ class GamePlay{
     const weaponNames = Object.keys(weapons);
     const weaponList = this.getItemsPostion(weaponNames.length, forbidden);
     for (let i=0; i<weaponNames.length; i++){
-      window.cases[weaponList[i]].update("weapon", weaponNames[i])
+      window.cases[weaponList[i]].update("weapon", weaponNames[i]);
     }
 
     //on défini la place du joueur 1
@@ -54,20 +59,23 @@ class GamePlay{
 
     //on ajoute les cases autour du joeur 1 afin d'éviter que les joueurs soient mis à coté l'un de l'autre
     playerCase = this.convertPosition(playerCase);
-    if (this.isInTheBoard( playerCase.row -1, playerCase.col -1 )) forbidden.push(this.rowConversion[playerCase.row -1] + (playerCase.col -1));
-    if (this.isInTheBoard( playerCase.row -1, playerCase.col    )) forbidden.push(this.rowConversion[playerCase.row -1] + (playerCase.col));
-    if (this.isInTheBoard( playerCase.row -1, playerCase.col +1 )) forbidden.push(this.rowConversion[playerCase.row -1] + (playerCase.col +1));
-    if (this.isInTheBoard( playerCase.row,    playerCase.col -1 )) forbidden.push(this.rowConversion[playerCase.row]    + (playerCase.col -1));
-    if (this.isInTheBoard( playerCase.row,    playerCase.col +1 )) forbidden.push(this.rowConversion[playerCase.row]    + (playerCase.col +1));
-    if (this.isInTheBoard( playerCase.row +1, playerCase.col -1 )) forbidden.push(this.rowConversion[playerCase.row +1] + (playerCase.col -1));
-    if (this.isInTheBoard( playerCase.row +1, playerCase.col    )) forbidden.push(this.rowConversion[playerCase.row +1] + (playerCase.col));
-    if (this.isInTheBoard( playerCase.row +1, playerCase.col +1 )) forbidden.push(this.rowConversion[playerCase.row +1] + (playerCase.col +1));
+    if (isInTheBoard( playerCase.row -1, playerCase.col -1 )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col -1));
+    if (isInTheBoard( playerCase.row -1, playerCase.col    )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col));
+    if (isInTheBoard( playerCase.row -1, playerCase.col +1 )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col +1));
+    if (isInTheBoard( playerCase.row,    playerCase.col -1 )) forbidden.push(rowConversion[playerCase.row]    + (playerCase.col -1));
+    if (isInTheBoard( playerCase.row,    playerCase.col +1 )) forbidden.push(rowConversion[playerCase.row]    + (playerCase.col +1));
+    if (isInTheBoard( playerCase.row +1, playerCase.col -1 )) forbidden.push(rowConversion[playerCase.row +1] + (playerCase.col -1));
+    if (isInTheBoard( playerCase.row +1, playerCase.col    )) forbidden.push(rowConversion[playerCase.row +1] + (playerCase.col));
+    if (isInTheBoard( playerCase.row +1, playerCase.col +1 )) forbidden.push(rowConversion[playerCase.row +1] + (playerCase.col +1));
 
     //on défini la place du joueur 2
     playerCase = this.getItemsPostion(1, forbidden)[0];
     window.cases[playerCase].update("player", 2);
     new Player({ "id":2, ...this.convertPosition(playerCase)});
-    window.player1.showMove()
+
+    //temportairement on affiche les mouvements du joueur 1
+    window.player1.showMoves();
+    window.player2.showMoves()
   }
 
   /**
@@ -75,18 +83,7 @@ class GamePlay{
    * @return {string} [description]
    */
   getPosition(){
-   return this.rowConversion[Math.floor(Math.random() * Math.floor(this.numberOfRow))]+(Math.floor(Math.random() * Math.floor(this.numberOfCol)));
-  }
-
-  /**
-   * check if the position asked is in the board
-   * @param  {integer}  row [description]
-   * @param  {integer}  col [description]
-   * @return {Boolean}     [description]
-   */
-  isInTheBoard(row, col){
-    if (row < 0 || col < 0 ) return false;
-    return true;
+   return rowConversion[Math.floor(Math.random() * Math.floor(this.numberOfRow))]+(Math.floor(Math.random() * Math.floor(this.numberOfCol)));
   }
 
 
@@ -119,7 +116,7 @@ class GamePlay{
     position = position.split('');
     return {
       "col" : Number(position[1]),
-      "row" : this.rowConversion.indexOf(position[0])
+      "row" : rowConversion.indexOf(position[0])
     }
   }
 }
