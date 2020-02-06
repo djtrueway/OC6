@@ -19,7 +19,9 @@ class Case{
 	}
 
 	click(){
-		alert(this.id)
+		this.update("player", this.playerMoving);
+		this.playerMoving	= null;
+		window["player"+this.player].moveToCase(this.id);
 	}
 	
 	showPlayer(){
@@ -40,6 +42,10 @@ class Case{
 			case "weapon":
 				this.weapon = newValue;
 				break;
+			case "cancelMove":
+				this.DOM.classList.remove("movable");
+				this.playerMoving	= null;
+				break;
 			default:
 				// statements_def
 				break;
@@ -50,12 +56,12 @@ class Case{
 		this.DOM.className = "empty";
 	}
 
-	movable(){
+	movable(playerId){
 		if (this.obstacle) return false;
+		if (this.player)   return false;
 		this.DOM.classList.add("movable");
 		this.DOM.onclick = this.click.bind(this);
+		this.playerMoving = playerId;
 		return true;
 	}
-	
 }
-

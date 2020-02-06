@@ -73,9 +73,9 @@ class GamePlay{
     window.cases[playerCase].update("player", 2);
     new Player({ "id":2, ...this.convertPosition(playerCase)});
 
-    //temportairement on affiche les mouvements du joueur 1
-    window.player1.showMoves();
-    window.player2.showMoves()
+    //on lance le jeu
+    this.currentPlayer = 0;
+    this.nextTurn();
   }
 
   /**
@@ -118,5 +118,11 @@ class GamePlay{
       "col" : Number(position[1]),
       "row" : rowConversion.indexOf(position[0])
     }
+  }
+
+  nextTurn(){
+    this.currentPlayer++;
+    if (this.currentPlayer>2) this.currentPlayer = 1;
+    window["player"+this.currentPlayer].showMoves();
   }
 }

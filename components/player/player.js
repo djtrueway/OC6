@@ -9,6 +9,7 @@ class Player{
     this.col            = specs.col;
     this.DOM            = document.createElement("div");
     this.DOM.innerHTML  = this.template();
+    this.availableMoves = [];
     document.body.appendChild(this.DOM)
   }
 
@@ -32,33 +33,46 @@ class Player{
     let i;
     let pointer;
 
+    this.availableMoves = [];
+
     //boucle pour mouvement à droite
     for (i=1; i<=3; i++){
-      pointer = this.col+i;
-      if (isInTheBoard(this.row, pointer)){
-       window.cases[rowConversion[this.row]+pointer].movable()
-       //console.log(pointer+ ' hello')
-       if (!window.cases[rowConversion[this.row]+pointer].movable()) i=10;
-      }
+      if (! this.addMovable(this.row, this.col+i) ) i=10;
     }
 
     //boucle pour mouvement à gauche
     for (i=1; i<=3; i++){
-      pointer = this.col-i;
-      if (isInTheBoard(this.row, pointer)) {
-        //console.log(window.cases[rowConversion[this.row]+pointer].movable())
-        if (!window.cases[rowConversion[this.row]+pointer].movable()) i=10;
-      }
+      if (! this.addMovable(this.row, this.col-i) ) i=10;
     }
 
-    for (i=1; i<=1; i++){
-      pointer = this.row-i;
-      if (isInTheBoard(this.row, pointer)) {
-        //window.cases[rowConversion[this.col]+pointer].movable()
-        console.log(this.row)
-      }
+    //boucle pour mouvement bas
+    for (i=1; i<=3; i++){
+      if (! this.addMovable(this.row+i, this.col) ) i=10;
     }
 
+    //boucle pour mouvement haut
+    for (i=1; i<=3; i++){
+      if (! this.addMovable(this.row-i, this.col) ) i=10;
+    }
+  }
 
+  addMovable(row, col){
+    if (! isInTheBoard(row, col)) return false;
+    const target = rowConversion[row]+col;
+    if (!window.cases[target].movable(this.id)) return false;
+    this.availableMoves.push(target);
+    return true;
+  }
+
+  moveToCase(newCase){
+    const entries = this.availableMoves.length;
+    for(let i=0; i< entries; i++){
+      if (this.availableMoves[i] !== newCase) window.cases[this.availableMoves[i]].update("cancelMove");
+    }
+    window.cases[rowConversion[this.row]+this.col].update("noMorePlayer");
+    const newPosition = gameplay.convertPosition(newCase);
+    this.col = newPosition.col;
+    this.row = newPosition.row;
+    gameplay.nextTurn();
   }
 }
