@@ -1,0 +1,35 @@
+body{
+  display: flex;
+  justify-content: space-around;
+}
+#plateau{
+  display: flex;
+  flex-wrap: wrap;
+}
+.player1{
+  background-color: red;
+}
+.player2{
+  background-color: green;
+}
+.obstacle{
+  background-color: darkgrey;
+}
+.weapon_defaultPlayer1{
+  background-image: url(./../images/weapon_defaultPlayer1.png);
+}
+.weapon_defaultPlayer2{
+  background-image: url(./../images/weapon_defaultPlayer2.png);
+}
+.weapon_arme1{
+  background-image: url(./../images/weapon_arme1.jpg);
+}
+.weapon_arme2{
+  background-image: url(./../images/weapon_arme2.jpg);
+}
+.weapon_arme3{
+  background-image: url(./../images/weapon_arme3.jpg);
+}
+.weapon_arme4{
+  background-image: url(./../images/weapon_arme4.png);
+}

@@ -4,25 +4,40 @@ class Player{
     this.id             = specs.id;
     this.live           = 10;
     this.weapon         = "defaultPlayer"+specs.id;
+    this.damage         = 
     this.name           = `joueur ${this.id}`;
     this.row            = specs.row;
     this.col            = specs.col;
     this.DOM            = document.createElement("div");
-    this.DOM.innerHTML  = this.template();
     this.availableMoves = [];
+
+    this.getDamage();
     document.body.appendChild(this.DOM)
   }
 
-  template(){
-    return `
+  render(){
+    this.DOM.innerHTML  =  `
       <input value="${this.name}" type="text" onchange="player${this.id}.updateName(this)">
       <div>live : ${this.live}</div>
       <div>weapon : ${this.weapon}</div>
+      <div>damages : ${this.damage}</div>
     `;
   }
 
   updateName(input){
 
+  }
+
+  getDamage(){
+    this.damage = weapons[this.weapon];
+    this.render();
+  }
+
+  updateWeapon(newWeapon){
+    const oldWeapon = this.weapon;
+    this.weapon     = newWeapon;
+    this.getDamage();
+    return oldWeapon;
   }
 
   place(){

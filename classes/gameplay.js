@@ -41,7 +41,7 @@ class GamePlay{
     //on place les armes
     const weaponNames = Object.keys(weapons);
     const weaponList = this.getItemsPostion(weaponNames.length, forbidden);
-    for (let i=0; i<weaponNames.length; i++){
+    for (let i=2; i<weaponNames.length; i++){
       window.cases[weaponList[i]].update("weapon", weaponNames[i]);
     }
 
