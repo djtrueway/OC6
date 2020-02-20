@@ -2,9 +2,10 @@ class Player{
   constructor(specs){
     window["player"+specs.id] = this;
     this.id             = specs.id;
-    this.live           = 10;
+    this.otherPlayer    = null;
+    this.live           = 100;
     this.weapon         = "defaultPlayer"+specs.id;
-    this.damage         = 
+    this.damage         = null;
     this.name           = `joueur ${this.id}`;
     this.row            = specs.row;
     this.col            = specs.col;
@@ -28,6 +29,19 @@ class Player{
 
   }
 
+  fight(){
+    this.render();
+    if (this.otherPlayer === null) this.otherPlayer = gameplay.nextPlayer(this.id);
+    window["player"+this.otherPlayer].update("damage", this.damage);
+    gameplay.nextTurn();
+  }
+  defend(){
+    this.render();
+  }
+  pass(){
+    this.render();
+  }
+
   getDamage(){
     this.damage = weapons[this.weapon];
     this.render();
@@ -38,6 +52,19 @@ class Player{
     this.weapon     = newWeapon;
     this.getDamage();
     return oldWeapon;
+  }
+
+  update(typeOfUpdate, newValue){
+    switch (typeOfUpdate) {
+      case "damage":
+        this.live -= newValue;
+        if (this.live <= 0) return gameplay.end(this.otherPlayer);
+        this.render();
+        break;
+      default:
+        // statements_def
+        break;
+    }
   }
 
   place(){
@@ -88,6 +115,16 @@ class Player{
     const newPosition = gameplay.convertPosition(newCase);
     this.col = newPosition.col;
     this.row = newPosition.row;
-    gameplay.nextTurn();
+
+    if (gameplay.couldIfight()) this.showFightPossibilities();
+    else gameplay.nextTurn();
+  }
+
+  showFightPossibilities(){
+    this.DOM.innerHTML  += `
+      <button onclick="window.player${this.id}.fight()">attaquer</button>
+      <button onclick="window.player${this.id}.defend()">se défendre</button>
+      <button onclick="window.player${this.id}.pass()">ne rien faire</button>
+    `;
   }
 }
