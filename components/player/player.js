@@ -2,7 +2,7 @@ class Player{
   constructor(specs){
     window["player"+specs.id] = this;
     this.id             = specs.id;
-    this.live           = 10;
+    this.live           = 100;
     this.weapon         = "defaultPlayer"+specs.id;
     this.damage         = 
     this.name           = `joueur ${this.id}`;
