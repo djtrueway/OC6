@@ -47,7 +47,21 @@ class GamePlay{
 
     //on défini la place du joueur 1
     forbidden      = forbidden.concat(weaponList);
-    let playerCase = this.getItemsPostion(1, forbidden)[0];
+
+    let playerCase = false;
+    while (!playerCase) {
+      let total = 0;
+      playerCase = this.getItemsPostion(1, forbidden)[0];
+      playerCase = this.convertPosition(playerCase);
+      if (this.checkCaseAvailable( playerCase.row -1, playerCase.col    , forbidden )) total++;
+      if (this.checkCaseAvailable( playerCase.row,    playerCase.col -1 , forbidden )) total++;
+      if (this.checkCaseAvailable( playerCase.row,    playerCase.col +1 , forbidden )) total++;
+      if (this.checkCaseAvailable( playerCase.row +1, playerCase.col    , forbidden )) total++;
+      if ( total !== 0) playerCase = false;
+      else playerCase = rowConversion[playerCase.row]+playerCase.col;
+    }
+
+
     window.cases[playerCase].update("player", 1);
 
     //on ajoute le joueur 1 et le plateau
@@ -58,7 +72,11 @@ class GamePlay{
     forbidden.push(playerCase);
 
     //on ajoute les cases autour du joeur 1 afin d'éviter que les joueurs soient mis à coté l'un de l'autre
+    console.log(playerCase);
     playerCase = this.convertPosition(playerCase);
+
+
+    console.log(playerCase);
     if (isInTheBoard( playerCase.row -1, playerCase.col -1 )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col -1));
     if (isInTheBoard( playerCase.row -1, playerCase.col    )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col));
     if (isInTheBoard( playerCase.row -1, playerCase.col +1 )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col +1));
@@ -69,6 +87,7 @@ class GamePlay{
     if (isInTheBoard( playerCase.row +1, playerCase.col +1 )) forbidden.push(rowConversion[playerCase.row +1] + (playerCase.col +1));
 
     //on défini la place du joueur 2
+    console.log(forbidden);
     playerCase = this.getItemsPostion(1, forbidden)[0];
     window.cases[playerCase].update("player", 2);
     new Player({ "id":2, ...this.convertPosition(playerCase)});
@@ -76,6 +95,11 @@ class GamePlay{
     //on lance le jeu
     this.currentPlayer = 0;
     this.nextTurn();
+  }
+
+  checkCaseAvailable(row, col, forbidden){
+    if (forbidden.indexOf(rowConversion[row]+col) >= -1) return false;
+    return true;
   }
 
   /**
@@ -120,9 +144,26 @@ class GamePlay{
     }
   }
 
-  nextTurn(){
-    this.currentPlayer++;
-    if (this.currentPlayer>2) this.currentPlayer = 1;
+  couldIfight(){
+    let common = 0;
+    if (window.player1.col === window.player2.col    ) common++;
+    if (window.player1.col === window.player2.col -1 ) common++;
+    if (window.player1.col === window.player2.col +1 ) common++;
+    if (window.player1.row === window.player2.row    ) common++;
+    if (window.player1.row === window.player2.row -1 ) common++;
+    if (window.player1.row === window.player2.row +1 ) common++;
+    if (common === 2) return true;
+    return false;
+  }
+
+  nextPlayer(player){
+    player++;
+    if (player>2) return 1;
+    return player;
+  }
+
+  nextTurn(){    
+    this.currentPlayer = this.nextPlayer(this.currentPlayer);
     window["player"+this.currentPlayer].showMoves();
   }
 }
