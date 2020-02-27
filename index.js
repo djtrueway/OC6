@@ -17,4 +17,5 @@ function isInTheBoard(row, col){
 }
 
 const rowConversion = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o"];
-const gameplay = new GamePlay(game);
+// const gameplay =
+new GamePlay(game);

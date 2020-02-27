@@ -2,6 +2,7 @@ class Player{
   constructor(specs){
     window["player"+specs.id] = this;
     this.id             = specs.id;
+    this.gameplay       = specs.gameplay;
     this.otherPlayer    = null;
     this.live           = 100;
     this.weapon         = "defaultPlayer"+specs.id;
@@ -17,12 +18,18 @@ class Player{
   }
 
   render(){
-    this.DOM.innerHTML  =  `
+      let html = `
       <input value="${this.name}" type="text" onchange="player${this.id}.updateName(this)">
       <div>live : ${this.live}</div>
       <div>weapon : ${this.weapon}</div>
       <div>damages : ${this.damage}</div>
     `;
+    if (this.gameplay.started && this.gameplay.currentPlayer === this.id && this.gameplay.couldIfight()) html += `
+      <button onclick="window.player${this.id}.fight()">attaquer</button>
+      <button onclick="window.player${this.id}.defend()">se défendre</button>
+      <button onclick="window.player${this.id}.pass()">ne rien faire</button>
+    `; 
+    this.DOM.innerHTML = html;
   }
 
   updateName(input){
@@ -31,15 +38,19 @@ class Player{
 
   fight(){
     this.render();
-    if (this.otherPlayer === null) this.otherPlayer = gameplay.nextPlayer(this.id);
+    if (this.otherPlayer === null) this.otherPlayer = this.gameplay.nextPlayer(this.id);
     window["player"+this.otherPlayer].update("damage", this.damage);
-    gameplay.nextTurn();
+    this.hideMoves();
+    this.gameplay.nextTurn();
   }
+
   defend(){
     this.render();
+    this.hideMoves();
   }
   pass(){
     this.render();
+    this.hideMoves();
   }
 
   getDamage(){
@@ -58,7 +69,7 @@ class Player{
     switch (typeOfUpdate) {
       case "damage":
         this.live -= newValue;
-        if (this.live <= 0) return gameplay.end(this.otherPlayer);
+        if (this.live <= 0) return this.gameplay.end(this.otherPlayer);
         this.render();
         break;
       default:
@@ -107,24 +118,20 @@ class Player{
   }
 
   moveToCase(newCase){
-    const entries = this.availableMoves.length;
-    for(let i=0; i< entries; i++){
-      if (this.availableMoves[i] !== newCase) window.cases[this.availableMoves[i]].update("cancelMove");
-    }
+    this.hideMoves(newCase);
     window.cases[rowConversion[this.row]+this.col].update("noMorePlayer");
-    const newPosition = gameplay.convertPosition(newCase);
+    const newPosition = this.gameplay.convertPosition(newCase);
     this.col = newPosition.col;
     this.row = newPosition.row;
-
-    if (gameplay.couldIfight()) this.showFightPossibilities();
-    else gameplay.nextTurn();
+    this.render();
+    // if ( ! this.gameplay.couldIfight()) this.gameplay.nextTurn();
   }
 
-  showFightPossibilities(){
-    this.DOM.innerHTML  += `
-      <button onclick="window.player${this.id}.fight()">attaquer</button>
-      <button onclick="window.player${this.id}.defend()">se défendre</button>
-      <button onclick="window.player${this.id}.pass()">ne rien faire</button>
-    `;
+  hideMoves(newCase=rowConversion[this.row]+this.col){
+    const entries = this.availableMoves.length;
+    for(let i=0; i< entries; i++){
+      if (this.availableMoves[i] === newCase) continue;
+      window.cases[this.availableMoves[i]].update("cancelMove");
+    }
   }
 }

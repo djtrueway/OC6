@@ -11,6 +11,7 @@ class GamePlay{
     let numberOfCol       = game.row;
     let numberOfRow       = game.col;
     let numberOfObstacles = game.obstacles;
+    let started           = false;
 
     //on créer le plaeau et les cases du plateau
     let board         = document.createElement("div");
@@ -65,7 +66,7 @@ class GamePlay{
     window.cases[playerCase].update("player", 1);
 
     //on ajoute le joueur 1 et le plateau
-    new Player({ "id":1, ...this.convertPosition(playerCase)});
+    new Player({ "id":1, ...this.convertPosition(playerCase), "gameplay":this});
     document.body.appendChild(board);
 
     //on ajoute la position du joueur à la liste des positions indisponibles
@@ -90,11 +91,12 @@ class GamePlay{
     console.log(forbidden);
     playerCase = this.getItemsPostion(1, forbidden)[0];
     window.cases[playerCase].update("player", 2);
-    new Player({ "id":2, ...this.convertPosition(playerCase)});
+    new Player({ "id":2, ...this.convertPosition(playerCase), "gameplay":this});
 
     //on lance le jeu
     this.currentPlayer = 0;
     this.nextTurn();
+    this.started = true;
   }
 
   checkCaseAvailable(row, col, forbidden){
