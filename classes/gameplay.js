@@ -73,11 +73,11 @@ class GamePlay{
     forbidden.push(playerCase);
 
     //on ajoute les cases autour du joeur 1 afin d'éviter que les joueurs soient mis à coté l'un de l'autre
-    console.log(playerCase);
+    // console.log(playerCase);
     playerCase = this.convertPosition(playerCase);
 
 
-    console.log(playerCase);
+    // console.log(playerCase);
     if (isInTheBoard( playerCase.row -1, playerCase.col -1 )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col -1));
     if (isInTheBoard( playerCase.row -1, playerCase.col    )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col));
     if (isInTheBoard( playerCase.row -1, playerCase.col +1 )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col +1));
@@ -88,7 +88,7 @@ class GamePlay{
     if (isInTheBoard( playerCase.row +1, playerCase.col +1 )) forbidden.push(rowConversion[playerCase.row +1] + (playerCase.col +1));
 
     //on défini la place du joueur 2
-    console.log(forbidden);
+    // console.log(forbidden);
     playerCase = this.getItemsPostion(1, forbidden)[0];
     window.cases[playerCase].update("player", 2);
     new Player({ "id":2, ...this.convertPosition(playerCase), "gameplay":this});
@@ -164,8 +164,9 @@ class GamePlay{
     return player;
   }
 
-  nextTurn(){    
+  nextTurn(){
     this.currentPlayer = this.nextPlayer(this.currentPlayer);
-    window["player"+this.currentPlayer].showMoves();
+    console.log("joueur",this.currentPlayer, "joue");
+    window["player"+this.currentPlayer].isPlaying();
   }
 }

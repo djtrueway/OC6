@@ -11,7 +11,7 @@ const game = {
  * @return {Boolean}     [description]
  */
 function isInTheBoard(row, col){
-  console.log('isInTheBoard row:',row,"col:",col);
+  // console.log('isInTheBoard row:',row,"col:",col);
   if (row < 0 || col < 0 || row >= game.row || col >= game.col) return false;
   return true;
 }

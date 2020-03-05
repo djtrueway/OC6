@@ -22,8 +22,8 @@ class Case{
     if (!this.movable) return;
     this.update("player", this.playerMoving);
     this.playerMoving = null;
-    window["player"+this.player].moveToCase(this.id);
     if (this.weapon !== null) this.swapWeapon();
+    window["player"+this.player].moveToCase(this.id);
   }
   
   showPlayer(){
