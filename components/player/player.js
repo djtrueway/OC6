@@ -24,7 +24,8 @@ class Player{
       <div>weapon : ${this.weapon}</div>
       <div>damages : ${this.damage}</div>
     `;
-    if (this.gameplay.started && this.gameplay.currentPlayer === this.id && this.gameplay.couldIfight()) html += `
+    console.log(this.gameplay.started)
+    if (/**this.gameplay.started &&**/ this.gameplay.currentPlayer === this.id && this.gameplay.couldIfight()) html += `
       <button onclick="window.player${this.id}.fight()">attaquer</button>
       <button onclick="window.player${this.id}.defend()">se défendre</button>
       <button onclick="window.player${this.id}.pass()">ne rien faire</button>
@@ -39,13 +40,17 @@ class Player{
   fight(){
     this.render();
     if (this.otherPlayer === null) this.otherPlayer = this.gameplay.nextPlayer(this.id);
-    window["player"+this.otherPlayer].update("damage", this.damage);
+    window["player"+this.otherPlayer].update("domage", this.damage);
     this.hideMoves();
     this.gameplay.nextTurn();
   }
 
   defend(){
     this.render();
+    if (this.otherPlayer === null) this.otherPlayer = this.gameplay.nextPlayer(this.id);
+    window["player"+this.otherPlayer].update("defend", this.damage);
+    this.hideMoves();
+    this.gameplay.nextTurn();
     this.hideMoves();
   }
   pass(){
@@ -66,15 +71,29 @@ class Player{
   }
 
   update(typeOfUpdate, newValue){
-    switch (typeOfUpdate) {
-      case "damage":
-        this.live -= newValue;
-        if (this.live <= 0) return this.gameplay.end(this.otherPlayer);
-        this.render();
-        break;
-      default:
-        // statements_def
-        break;
+    if (typeOfUpdate === 'domage'){
+      switch (typeOfUpdate) {
+        case "domage":
+          this.live -= newValue;
+          if (this.live <= 0) return this.gameplay.end(this.otherPlayer);
+          this.render();
+          break;
+        default:
+          // statements_def
+          break;
+      }
+    }
+    if (typeOfUpdate === 'defend'){
+      switch (typeOfUpdate) {
+        case "defend":
+          this.live -= newValue;
+          if (this.live <= 0) return this.gameplay.end(this.otherPlayer);
+          this.render();
+          break;
+        default:
+          // statements_def
+          break;
+      }
     }
   }
 
@@ -124,7 +143,9 @@ class Player{
     this.col = newPosition.col;
     this.row = newPosition.row;
     this.render();
-    // if ( ! this.gameplay.couldIfight()) this.gameplay.nextTurn();
+    //  
+    if (!this.gameplay.couldIfight()) this.gameplay.nextTurn()
+    else this.gameplay.couldIfight();
   }
 
   hideMoves(newCase=rowConversion[this.row]+this.col){
