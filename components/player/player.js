@@ -3,7 +3,7 @@ class Player{
     window["player"+specs.id] = this;
     this.id             = specs.id;
     this.gameplay       = specs.gameplay;
-    this.otherPlayer    = null;
+    this.otherPlayer = this.gameplay.nextPlayer(this.id);
     this.live           = 10;
     this.isDefending    = false;
     this.weapon         = "defaultPlayer"+specs.id;
@@ -40,8 +40,8 @@ class Player{
   }
 
   fight(){
-    if (this.otherPlayer === null) this.otherPlayer = this.gameplay.nextPlayer(this.id);
-    window["player"+this.otherPlayer].update("domage", this.damage);
+    const gameGoesOn = window["player"+this.otherPlayer].update("domage", this.damage);
+    if (!gameGoesOn) return;
     this.hideMoves();
     this.gameplay.nextTurn();
     this.render();
@@ -74,12 +74,15 @@ class Player{
   }
 
   update(typeOfUpdate, newValue){
-    console.log("update",typeOfUpdate)
+    console.log("update",typeOfUpdate, this.otherPlayer);
     switch (typeOfUpdate) {
       case "domage":
         if (this.isDefending) newValue = newValue/2;
         this.live -= newValue;
-        if (this.live <= 0) return this.gameplay.end(this.otherPlayer);
+        if (this.live <= 0) {
+          this.gameplay.end(this.otherPlayer);
+          return false;
+        } 
         this.render();
         break;
       // case "defend":
@@ -91,6 +94,7 @@ class Player{
         // statements_def
         break;
     }
+    return true;
   }
 
   place(){
@@ -158,5 +162,10 @@ class Player{
   isPlaying(){
     this.isDefending = false;
     this.showMoves();
+  }
+
+  remove(){
+    this.DOM.parentNode.removeChild(this.DOM);
+    delete(window[`player${this.id}`]);
   }
 }

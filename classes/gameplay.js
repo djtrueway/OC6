@@ -14,9 +14,9 @@ class GamePlay{
     let started           = false;
 
     //on créer le plaeau et les cases du plateau
-    let board         = document.createElement("div");
-    board.id          = "plateau";
-    board.style.width = `${numberOfCol*3.3}rem`;
+    this.board         = document.createElement("div");
+    this.board.id          = "plateau";
+    this.board.style.width = `${numberOfCol*3.3}rem`;
     this.numberOfCol = numberOfCol;
     this.numberOfRow = numberOfRow;
     let col = 0;
@@ -25,7 +25,7 @@ class GamePlay{
     window.cases = {};
     const numberOfCases = numberOfCol * numberOfRow;
     for (let i = 0; i < numberOfCases; i++) {
-      new Case(rowConversion[row], col, board);
+      new Case(rowConversion[row], col, this.board);
       col++;
       if (col >= numberOfCol) {
         col = 0;
@@ -67,7 +67,7 @@ class GamePlay{
 
     //on ajoute le joueur 1 et le plateau
     new Player({ "id":1, ...this.convertPosition(playerCase), "gameplay":this});
-    document.body.appendChild(board);
+    document.body.appendChild(this.board);
 
     //on ajoute la position du joueur à la liste des positions indisponibles
     forbidden.push(playerCase);
@@ -171,6 +171,20 @@ class GamePlay{
   }
 
   end(other){
-    alert('le joueur '+ ' '+ other +'a perdu')
+    // alert(`le joueur ${winnerName} a gagné`);
+    const winnerName      = window[`player${other}`].name+"";
+    window.player1.remove();
+    window.player2.remove();
+    this.board.parentNode.removeChild(this.board);
+    this.DOMend           = document.createElement("endscreen");
+    this.DOMend.innerHTML = this.renderEnd (winnerName);
+    // this.DOMend.onclick = 
+    document.body.appendChild(this.DOMend);
+  }
+
+  renderEnd(winnerName){
+      return `       
+      <modale>${winnerName} a gagné</modale>
+      `;
   }
 }
