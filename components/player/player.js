@@ -4,7 +4,7 @@ class Player{
     this.id             = specs.id;
     this.gameplay       = specs.gameplay;
     this.otherPlayer    = null;
-    this.live           = 100;
+    this.live           = 10;
     this.isDefending    = false;
     this.weapon         = "defaultPlayer"+specs.id;
     this.damage         = null;

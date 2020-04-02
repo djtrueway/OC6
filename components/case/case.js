@@ -9,7 +9,7 @@ class Case{
     this.id               = row+col;
     window.cases[this.id] =this;
     this.DOM              = document.createElement("case");
-    this.DOM.innerHTML    = this.id;
+    this.DOM.innerText    = this.id;
     this.DOM.onclick      = null;
 
     DOMcontainer.appendChild(this.DOM);

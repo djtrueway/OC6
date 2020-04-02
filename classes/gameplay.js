@@ -169,4 +169,8 @@ class GamePlay{
     console.log("joueur",this.currentPlayer, "joue");
     window["player"+this.currentPlayer].isPlaying();
   }
+
+  end(other){
+    alert('le joueur '+ ' '+ other +'a perdu')
+  }
 }
