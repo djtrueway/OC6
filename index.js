@@ -57,7 +57,9 @@
     game.obstacles = document.querySelector('#obstacle').value
     window.live = document.querySelector('#live').value
     if((game.obstacles >= 6) && (window.live >= 50)){
-      document.querySelector('#option').style.display = 'none'
+      document.querySelector('#option').style.display = 'none';
+      delete window.player2;
+      delete window.player1;
       new GamePlay(game);
     }
     else alert('bad entry')

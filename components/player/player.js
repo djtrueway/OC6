@@ -32,7 +32,7 @@ class Player{
       html += `
         <button onclick="window.player${this.id}.fight()">attaquer</button>
         <button onclick="window.player${this.id}.defend()">se défendre</button>
-        <button onclick="window.player${this.id}.pass()">ne rien faire</button>
+        <button onclick="window.player${this.id}.pass()">fuire</button>
         `; 
     }
     this.DOM.innerHTML = html;
@@ -59,8 +59,12 @@ class Player{
     this.render();
   }
   pass(){
-    this.gameplay.nextTurn();
-    this.hideMoves();
+    const newCase = this.availableMoves[Math.floor(Math.random()*this.availableMoves.length)];
+    window.cases[newCase].update("player", this.id);
+    this.moveToCase(newCase);
+
+    // this.gameplay.nextTurn();
+    // this.hideMoves();
     this.render();
   }
 
@@ -137,6 +141,7 @@ class Player{
   }
 
   moveToCase(newCase){
+    console.log("moveToCase", newCase);
     this.hideMoves(newCase);
     window.cases[rowConversion[this.row]+this.col].update("noMorePlayer");
     const newPosition = this.gameplay.convertPosition(newCase);
