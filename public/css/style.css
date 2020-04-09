@@ -1,7 +1,7 @@
 body{
   display: flex;
   justify-content: space-around;
-  margin: 0;
+  margin-top :5%
 }
 #plateau{
   display: flex;
@@ -52,4 +52,13 @@ endscreen modale{
     align-items: center;
     justify-content: center;
     border-radius: .5rem;
+}
+
+#option{
+  margin-top: 10%;
+}
+
+.start{
+  border: 5px solid darkgray;
+  padding: 25% 1% 25% 1%;
 }

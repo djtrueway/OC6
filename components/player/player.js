@@ -4,7 +4,7 @@ class Player{
     this.id             = specs.id;
     this.gameplay       = specs.gameplay;
     this.otherPlayer = this.gameplay.nextPlayer(this.id);
-    this.live           = 10;
+    this.live           = live;
     this.isDefending    = false;
     this.weapon         = "defaultPlayer"+specs.id;
     this.damage         = null;
@@ -20,6 +20,9 @@ class Player{
 
   render(){
       let html = `
+      <div>
+        <img src='' alt='window.player${this.id}'>
+      </div>
       <input value="${this.name}" type="text" onchange="player${this.id}.updateName(this)">
       <div>live : ${this.live}</div>
       <div>weapon : ${this.weapon}</div>
@@ -57,8 +60,8 @@ class Player{
   }
   pass(){
     this.gameplay.nextTurn();
-    this.render();
     this.hideMoves();
+    this.render();
   }
 
   getDamage(){
@@ -95,10 +98,6 @@ class Player{
         break;
     }
     return true;
-  }
-
-  place(){
-   // cases.a0.DOM.innerHTML = this.name
   }
 
   showMoves(){

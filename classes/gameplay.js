@@ -182,9 +182,13 @@ class GamePlay{
     document.body.appendChild(this.DOMend);
   }
 
+
+
   renderEnd(winnerName){
       return `       
-      <modale>${winnerName} a gagné</modale>
+      <modale>${winnerName} a gagné<br></br>
+      <button onclick='replay()'> replay </button>
+      </modale>
       `;
   }
 }

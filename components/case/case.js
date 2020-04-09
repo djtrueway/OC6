@@ -20,14 +20,11 @@ class Case{
 
   click(){
     if (!this.movable) return;
+    if (this.player) return
     this.update("player", this.playerMoving);
     this.playerMoving = null;
     if (this.weapon !== null) this.swapWeapon();
     window["player"+this.player].moveToCase(this.id);
-  }
-  
-  showPlayer(){
-    
   }
 
   update(things, newValue=null){
