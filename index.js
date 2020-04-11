@@ -69,7 +69,7 @@
 
   function replay(){
     document.querySelector('endscreen').style.display = 'none'
-    return run()
+    new GamePlay(game);
   }
 
   window.replay = replay

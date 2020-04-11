@@ -57,10 +57,35 @@ endscreen modale{
 }
 
 #option{
-  margin-top: 10%;
+  margin-top: 5%;
 }
 
 .start{
   border: 5px solid darkgray;
-  padding: 25% 1% 25% 1%;
+  padding: 5.5rem;
+}
+
+input{
+  padding: 15px;
+  border: 3px solid #aaa;
+}
+
+button{
+  margin-top: 5px;
+  padding: 10px;
+  border: 3px solid #aaa;
+  border-radius: 20px;
+  background-color: #aaa;
+}
+
+button:hover{
+  margin-top: 5px;
+  padding: 10px;
+  border: 3px solid rgb(0, 153, 255);
+  border-radius: 20px;
+  background-color: rgb(0, 153, 255);
+}
+
+.col-5 button{
+  margin-left: 25%;
 }

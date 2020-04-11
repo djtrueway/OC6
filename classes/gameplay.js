@@ -134,7 +134,7 @@ class GamePlay{
   }
 
   /**
-   * convert the string position to an object where row is a number
+   * convert the string position to an object "player" where row is a number
    * @param  {string} position [description]
    * @return {json}
    */
@@ -154,7 +154,10 @@ class GamePlay{
     if (window.player1.row === window.player2.row    ) common++;
     if (window.player1.row === window.player2.row -1 ) common++;
     if (window.player1.row === window.player2.row +1 ) common++;
-    if (common === 2) return true;
+    if (common === 2){
+      console.log('fight')
+      return true;
+    } 
     return false;
   }
 
@@ -181,8 +184,6 @@ class GamePlay{
     // this.DOMend.onclick = 
     document.body.appendChild(this.DOMend);
   }
-
-
 
   renderEnd(winnerName){
       return `       

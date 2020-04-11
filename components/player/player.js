@@ -3,7 +3,7 @@ class Player{
     window["player"+specs.id] = this;
     this.id             = specs.id;
     this.gameplay       = specs.gameplay;
-    this.otherPlayer = this.gameplay.nextPlayer(this.id);
+    this.otherPlayer    = this.gameplay.nextPlayer(this.id);
     this.live           = live;
     this.isDefending    = false;
     this.weapon         = "defaultPlayer"+specs.id;
@@ -16,12 +16,15 @@ class Player{
 
     this.getDamage();
     document.body.appendChild(this.DOM)
+
+    // sometime this show null like value
+    this.pass = this.pass.bind(this)
   }
 
   render(){
       let html = `
       <div>
-        <img src='' alt='window.player${this.id}'>
+        <img src='/public/images/player${this.id}.png' width='100' alt='window.player${this.id}'>
       </div>
       <input value="${this.name}" type="text" onchange="player${this.id}.updateName(this)">
       <div>live : ${this.live}</div>
@@ -59,7 +62,10 @@ class Player{
     this.render();
   }
   pass(){
-    const newCase = this.availableMoves[Math.floor(Math.random()*this.availableMoves.length)];
+    const n = Object.keys(cases)
+    console.log(n)
+    const newCase = n[Math.floor(Math.random()* n.length)]
+    //const newCase = this.availableMoves[Math.floor(Math.random()* this.availableMoves.length)];
     window.cases[newCase].update("player", this.id);
     this.moveToCase(newCase);
 
@@ -81,7 +87,7 @@ class Player{
   }
 
   update(typeOfUpdate, newValue){
-    console.log("update",typeOfUpdate, this.otherPlayer);
+    console.log("update", typeOfUpdate, this.otherPlayer);
     switch (typeOfUpdate) {
       case "domage":
         if (this.isDefending) newValue = newValue/2;
@@ -142,19 +148,26 @@ class Player{
 
   moveToCase(newCase){
     console.log("moveToCase", newCase);
+
+    // hide and remove  position to move
     this.hideMoves(newCase);
+    // remove player on this case
     window.cases[rowConversion[this.row]+this.col].update("noMorePlayer");
+    // add col and row player on the new case
     const newPosition = this.gameplay.convertPosition(newCase);
     this.col = newPosition.col;
     this.row = newPosition.row;
     // this.render();
     
-
     // if (!this.gameplay.couldIfight()) this.gameplay.nextTurn();
     // else this.gameplay.couldIfight();
-     this.gameplay.nextTurn();
+
+    // let other player to move
+    this.gameplay.nextTurn();
   }
 
+
+  // remove position to move
   hideMoves(newCase=rowConversion[this.row]+this.col){
     const entries = this.availableMoves.length;
     for(let i=0; i< entries; i++){
@@ -165,7 +178,8 @@ class Player{
 
   isPlaying(){
     this.isDefending = false;
-    this.showMoves();
+    if( this.gameplay.couldIfight() === false) this.showMoves();
+    else this.render()
   }
 
   remove(){
