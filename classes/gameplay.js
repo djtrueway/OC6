@@ -169,7 +169,7 @@ class GamePlay{
 
   nextTurn(){
     this.currentPlayer = this.nextPlayer(this.currentPlayer);
-    console.log("joueur",this.currentPlayer, "joue");
+    //console.log("joueur",this.currentPlayer, "joue");
     window["player"+this.currentPlayer].isPlaying();
   }
 

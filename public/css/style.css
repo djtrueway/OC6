@@ -61,7 +61,7 @@ endscreen modale{
 }
 
 .start{
-  border: 5px solid darkgray;
+  border: 5px solid rgb(0, 153, 255);
   padding: 5.5rem;
 }
 

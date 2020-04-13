@@ -62,9 +62,10 @@ class Player{
     this.render();
   }
   pass(){
-    const n = Object.keys(cases)
-    console.log(n)
-    const newCase = n[Math.floor(Math.random()* n.length)]
+    const n = Object.keys(cases);
+    //console.log(n);
+    const newCase = n[Math.floor(Math.random()* n.length)];
+    console.log('pass method '+ this.id)
     //const newCase = this.availableMoves[Math.floor(Math.random()* this.availableMoves.length)];
     window.cases[newCase].update("player", this.id);
     this.moveToCase(newCase);
