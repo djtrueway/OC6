@@ -71,11 +71,11 @@ class GamePlay{
 
     //on ajoute la position du joueur à la liste des positions indisponibles
     forbidden.push(playerCase);
+    window.forbidden = forbidden;
 
     //on ajoute les cases autour du joeur 1 afin d'éviter que les joueurs soient mis à coté l'un de l'autre
     // console.log(playerCase);
     playerCase = this.convertPosition(playerCase);
-
 
     // console.log(playerCase);
     if (isInTheBoard( playerCase.row -1, playerCase.col -1 )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col -1));
@@ -148,14 +148,23 @@ class GamePlay{
 
   couldIfight(){
     let common = 0;
-    if (window.player1.col === window.player2.col    ) common++;
-    if (window.player1.col === window.player2.col -1 ) common++;
-    if (window.player1.col === window.player2.col +1 ) common++;
-    if (window.player1.row === window.player2.row    ) common++;
-    if (window.player1.row === window.player2.row -1 ) common++;
-    if (window.player1.row === window.player2.row +1 ) common++;
-    if (common === 2){
-      console.log('fight')
+    if ((window.player1.col === window.player2.col ) && (window.player1.row === window.player2.row -1 )) {
+      common++; 
+    } 
+    if ((window.player1.col === window.player2.col ) && (window.player1.row === window.player2.row +1 )) {
+      common++; 
+    } 
+    
+    if ((window.player1.row === window.player2.row) && (window.player1.col === window.player2.col +1 )){
+      common++; 
+    } 
+
+    if ((window.player1.row === window.player2.row) && (window.player1.col === window.player2.col -1 )){
+      common++; 
+    }
+    
+    if (common === 1){
+      //console.log('fight')
       return true;
     } 
     return false;

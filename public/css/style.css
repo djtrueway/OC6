@@ -67,14 +67,15 @@ endscreen modale{
 
 input{
   padding: 15px;
-  border: 3px solid #aaa;
+  border: 3px solid rgb(0, 153, 255); ;
+  
 }
 
 button{
   margin-top: 5px;
   padding: 10px;
-  border: 3px solid #aaa;
   border-radius: 20px;
+  border: 3px solid rgb(0, 153, 255);
   background-color: #aaa;
 }
 

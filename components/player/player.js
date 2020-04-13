@@ -65,7 +65,8 @@ class Player{
     const n = Object.keys(cases);
     //console.log(n);
     const newCase = n[Math.floor(Math.random()* n.length)];
-    console.log('pass method '+ this.id)
+    //console.log(forbidden)
+    //console.log(newCase)
     //const newCase = this.availableMoves[Math.floor(Math.random()* this.availableMoves.length)];
     window.cases[newCase].update("player", this.id);
     this.moveToCase(newCase);
