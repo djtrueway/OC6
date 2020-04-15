@@ -64,9 +64,15 @@ class Player{
   pass(){
     const n = Object.keys(cases);
     //console.log(n);
-    const newCase = n[Math.floor(Math.random()* n.length)];
-    //console.log(forbidden)
-    //console.log(newCase)
+    let newCase = n[Math.floor(Math.random() * n.length)]
+    // verify if the case is forbidden
+    let b = forbidden.includes(newCase);
+    // if yes try another case
+    while(b){
+      newCase = n[Math.floor(Math.random() * n.length)]
+      b = forbidden.includes(newCase);
+    }
+    
     //const newCase = this.availableMoves[Math.floor(Math.random()* this.availableMoves.length)];
     window.cases[newCase].update("player", this.id);
     this.moveToCase(newCase);
@@ -149,7 +155,7 @@ class Player{
   }
 
   moveToCase(newCase){
-    console.log("moveToCase", newCase);
+    //console.log("moveToCase", newCase);
 
     // hide and remove  position to move
     this.hideMoves(newCase);
@@ -159,10 +165,6 @@ class Player{
     const newPosition = this.gameplay.convertPosition(newCase);
     this.col = newPosition.col;
     this.row = newPosition.row;
-    // this.render();
-    
-    // if (!this.gameplay.couldIfight()) this.gameplay.nextTurn();
-    // else this.gameplay.couldIfight();
 
     // let other player to move
     this.gameplay.nextTurn();
@@ -170,7 +172,7 @@ class Player{
 
 
   // remove position to move
-  hideMoves(newCase=rowConversion[this.row]+this.col){
+  hideMoves(newCase /*=rowConversion[this.row]+this.col */){
     const entries = this.availableMoves.length;
     for(let i=0; i< entries; i++){
       if (this.availableMoves[i] === newCase) continue;

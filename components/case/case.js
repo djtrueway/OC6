@@ -19,8 +19,8 @@ class Case{
   }
 
   click(){
-    if (!this.movable) return;
-    if (this.player) return
+    if (!this.movable) return false;
+    if (this.player) return false;
     this.update("player", this.playerMoving);
     this.playerMoving = null;
     if (this.weapon !== null) this.swapWeapon();
@@ -55,6 +55,8 @@ class Case{
     this.DOM.className = "empty";
   }
 
+
+  // add the click on the cases
   movable(playerId){
     if (this.obstacle) return false;
     if (this.player)   return false;
