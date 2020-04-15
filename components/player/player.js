@@ -48,7 +48,7 @@ class Player{
   fight(){
     const gameGoesOn = window["player"+this.otherPlayer].update("domage", this.damage);
     if (!gameGoesOn) return;
-    this.hideMoves();
+    //this.hideMoves(rowConversion[this.row]+this.col);
     this.gameplay.nextTurn();
     this.render();
   }
@@ -58,7 +58,7 @@ class Player{
     // window["player"+this.otherPlayer].update("defend", this.damage);
     this.isDefending = true;
     this.gameplay.nextTurn();
-    this.hideMoves();
+    //this.hideMoves(rowConversion[this.row]+this.col);
     this.render();
   }
   pass(){
@@ -120,7 +120,6 @@ class Player{
 
   showMoves(){
     let i;
-    let pointer;
 
     this.availableMoves = [];
 
@@ -172,7 +171,7 @@ class Player{
 
 
   // remove position to move
-  hideMoves(newCase /*=rowConversion[this.row]+this.col */){
+  hideMoves(newCase){
     const entries = this.availableMoves.length;
     for(let i=0; i< entries; i++){
       if (this.availableMoves[i] === newCase) continue;
@@ -182,7 +181,7 @@ class Player{
 
   isPlaying(){
     this.isDefending = false;
-    if( this.gameplay.couldIfight() === false) this.showMoves();
+    if( !this.gameplay.couldIfight()) this.showMoves();
     else this.render()
   }
 
