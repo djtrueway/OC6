@@ -24,7 +24,7 @@ class Player{
   render(){
       let html = `
       <div>
-        <img src='/public/images/player${this.id}.png' width='100' alt='window.player${this.id}'>
+        <img src='public/images/player${this.id}.png' width='100' alt='window.player${this.id}'>
       </div>
       <input value="${this.name}" type="text" onchange="player${this.id}.updateName(this)">
       <div>live : ${this.live}</div>

@@ -44,6 +44,7 @@ class Case{
       case "cancelMove":
         this.DOM.classList.remove("movable");
         this.playerMoving = null;
+        this.DOM.onclick      = null;
         break;
       default:
         // statements_def
