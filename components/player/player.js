@@ -67,10 +67,17 @@ class Player{
     let newCase = n[Math.floor(Math.random() * n.length)]
     // verify if the case is forbidden
     let b = forbidden.includes(newCase);
+    
+
+    //console.log(positionPlayers)
+    let p = positionPlayers.includes(newCase)
+
     // if yes try another case
-    while(b){
+    while(b || p){
       newCase = n[Math.floor(Math.random() * n.length)]
+      p = positionPlayers.includes(newCase)
       b = forbidden.includes(newCase);
+      //alert('forbidden')
     }
     
     //const newCase = this.availableMoves[Math.floor(Math.random()* this.availableMoves.length)];
@@ -95,7 +102,7 @@ class Player{
   }
 
   update(typeOfUpdate, newValue){
-    console.log("update", typeOfUpdate, this.otherPlayer);
+    //console.log("update", typeOfUpdate, this.otherPlayer);
     switch (typeOfUpdate) {
       case "domage":
         if (this.isDefending) newValue = newValue/2;
@@ -173,14 +180,29 @@ class Player{
   // remove position to move
   hideMoves(newCase){
     const entries = this.availableMoves.length;
+    //console.log(this.availableMoves)
+    //console.log(`new Case is ${newCase}`)
     for(let i=0; i< entries; i++){
-      if (this.availableMoves[i] === newCase) continue;
-      window.cases[this.availableMoves[i]].update("cancelMove");
+      if ((this.availableMoves[i].includes(newCase)) ||(this.availableMoves[i].includes(positionPlayers[0])) || (this.availableMoves[i].includes(positionPlayers[1]))  ){
+        //console.log(this.availableMoves[i].includes(newCase))
+        //console.log('player1 ' + this.availableMoves[i].includes(positionPlayers[0]) + ' and' + positionPlayers[0])
+        //console.log('player2  '+this.availableMoves[i].includes(positionPlayers[1]) +' and' + positionPlayers[1])
+      }
+      else{
+        window.cases[this.availableMoves[i]].update("cancelMove");
+        //console.log('pase')
+      }
     }
   }
 
   isPlaying(){
     this.isDefending = false;
+    let place1 = rowConversion[player1.row]+player1.col
+    let place2 = rowConversion[player2.row]+player2.col
+    let positionPlayers= [place1]
+    positionPlayers.push(place2)
+
+    window.positionPlayers = positionPlayers
     if( !this.gameplay.couldIfight()) this.showMoves();
     else this.render()
   }

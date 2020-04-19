@@ -44,16 +44,18 @@ class Case{
       case "cancelMove":
         this.DOM.classList.remove("movable");
         this.playerMoving = null;
-        this.DOM.onclick      = null;
+        this.DOM.onclick  = null;
         break;
       default:
         // statements_def
+        alert('default')
         break;
     }
     if (this.player !== null)   return this.DOM.className = "player"+newValue;
     if (this.weapon !== null)   return this.DOM.className = "weapon_"+this.weapon;
     if (this.obstacle) return this.DOM.className = "obstacle";
     this.DOM.className = "empty";
+    if(this.DOM.className === "playernull") alert('player null')
   }
 
 
