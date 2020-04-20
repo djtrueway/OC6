@@ -62,7 +62,7 @@
       delete window.player1;
       new GamePlay(game);
     }
-    else alert('bad entry')
+    else alert('Obstacle entre 6 et 15 && live entre 50 et 250')
    
   }
   render()
