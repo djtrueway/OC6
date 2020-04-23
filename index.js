@@ -6,9 +6,11 @@
   }
 
   let DOM = document.createElement('div')
+  //let DOM = $('div').attr('id', 'option')
   DOM.id = 'option'
 
   document.body.appendChild(DOM)
+  //$('body').append(DOM)
 
   function render(){
 
@@ -53,27 +55,27 @@
   window.isInTheBoard = isInTheBoard
   window.rowConversion = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o"];
 
+  // this function will run the game
     function run(){
-    game.obstacles = document.querySelector('#obstacle').value
-    window.live = document.querySelector('#live').value
-    if((game.obstacles >= 6) && (window.live >= 50)){
-      document.querySelector('#option').style.display = 'none';
+    game.obstacles = $('#obstacle').val()
+    window.live = $('#live').val()
+    if((game.obstacles >= 6 && game.obstacles <= 15) && (window.live >= 50 && window.live <= 250)){
+      $('#option').hide();
       delete window.player2;
       delete window.player1;
       new GamePlay(game);
     }
-    else alert('bad entry')
+    else alert('Obstacle entre 6 et 15 && live entre 50 et 250')
    
   }
   render()
 
   function replay(){
-    document.querySelector('endscreen').style.display = 'none'
+    $('endscreen').hide()
     new GamePlay(game);
   }
 
   window.replay = replay
   document.querySelector('button').onclick = run 
-  
   
 })

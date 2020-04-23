@@ -73,7 +73,7 @@ class GamePlay{
     forbidden.push(playerCase);
     window.forbidden = forbidden;
 
-    //on ajoute les cases autour du joeur 1 afin d'éviter que les joueurs soient mis à coté l'un de l'autre
+    //on ajoute les cases autour du joueur 1 afin d'éviter que les joueurs soient mis à coté l'un de l'autre
     // console.log(playerCase);
     playerCase = this.convertPosition(playerCase);
 
