@@ -74,10 +74,8 @@ class GamePlay{
     window.forbidden = forbidden;
 
     //on ajoute les cases autour du joueur 1 afin d'éviter que les joueurs soient mis à coté l'un de l'autre
-    // console.log(playerCase);
     playerCase = this.convertPosition(playerCase);
 
-    // console.log(playerCase);
     if (isInTheBoard( playerCase.row -1, playerCase.col -1 )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col -1));
     if (isInTheBoard( playerCase.row -1, playerCase.col    )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col));
     if (isInTheBoard( playerCase.row -1, playerCase.col +1 )) forbidden.push(rowConversion[playerCase.row -1] + (playerCase.col +1));
@@ -88,7 +86,6 @@ class GamePlay{
     if (isInTheBoard( playerCase.row +1, playerCase.col +1 )) forbidden.push(rowConversion[playerCase.row +1] + (playerCase.col +1));
 
     //on défini la place du joueur 2
-    // console.log(forbidden);
     playerCase = this.getItemsPostion(1, forbidden)[0];
     window.cases[playerCase].update("player", 2);
     new Player({ "id":2, ...this.convertPosition(playerCase), "gameplay":this});
@@ -99,6 +96,12 @@ class GamePlay{
     this.started = true;
   }
 
+  /**
+   * convert the string position to an object "player" where row is a number
+   * @param  {number} position [description]
+   * @param  {number} position [description]
+   * @return {boolean}
+   */
   checkCaseAvailable(row, col, forbidden){
     if (forbidden.indexOf(rowConversion[row]+col) >= -1) return false;
     return true;
@@ -164,7 +167,6 @@ class GamePlay{
     }
     
     if (common === 1){
-      //console.log('fight')
       return true;
     } 
     return false;
@@ -178,19 +180,16 @@ class GamePlay{
 
   nextTurn(){
     this.currentPlayer = this.nextPlayer(this.currentPlayer);
-    //console.log("joueur",this.currentPlayer, "joue");
     window["player"+this.currentPlayer].isPlaying();
   }
 
   end(other){
-    // alert(`le joueur ${winnerName} a gagné`);
     const winnerName      = window[`player${other}`].name+"";
     window.player1.remove();
     window.player2.remove();
     this.board.parentNode.removeChild(this.board);
     this.DOMend           = document.createElement("endscreen");
     this.DOMend.innerHTML = this.renderEnd (winnerName);
-    // this.DOMend.onclick = 
     document.body.appendChild(this.DOMend);
   }
 

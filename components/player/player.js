@@ -20,7 +20,10 @@ class Player{
     // sometime this show null like value
     this.pass = this.pass.bind(this)
   }
-
+  /**
+   * show the player information
+   * @return {HTMLelement}
+   */
   render(){
       let html = `
       <div>
@@ -40,7 +43,11 @@ class Player{
     }
     this.DOM.innerHTML = html;
   }
-
+  /**
+   * update the name of the player 
+   * @param  {string} position [the name of the player]
+   * @return {string}
+   */
   updateName(input){
     this.name = input.value;
   }
@@ -48,28 +55,20 @@ class Player{
   fight(){
     const gameGoesOn = window["player"+this.otherPlayer].update("domage", this.damage);
     if (!gameGoesOn) return;
-    //this.hideMoves(rowConversion[this.row]+this.col);
     this.gameplay.nextTurn();
     this.render();
   }
 
   defend(){
-    // if (this.otherPlayer === null) this.otherPlayer = this.gameplay.nextPlayer(this.id);
-    // window["player"+this.otherPlayer].update("defend", this.damage);
     this.isDefending = true;
     this.gameplay.nextTurn();
-    //this.hideMoves(rowConversion[this.row]+this.col);
     this.render();
   }
   pass(){
     const n = Object.keys(cases);
-    //console.log(n);
     let newCase = n[Math.floor(Math.random() * n.length)]
-    // verify if the case is forbidden
     let b = forbidden.includes(newCase);
     
-
-    //console.log(positionPlayers)
     let p = positionPlayers.includes(newCase)
 
     // if yes try another case
@@ -77,15 +76,11 @@ class Player{
       newCase = n[Math.floor(Math.random() * n.length)]
       p = positionPlayers.includes(newCase)
       b = forbidden.includes(newCase);
-      //alert('forbidden')
     }
     
-    //const newCase = this.availableMoves[Math.floor(Math.random()* this.availableMoves.length)];
     window.cases[newCase].update("player", this.id);
     this.moveToCase(newCase);
 
-    // this.gameplay.nextTurn();
-    // this.hideMoves();
     this.render();
   }
 
@@ -102,7 +97,7 @@ class Player{
   }
 
   update(typeOfUpdate, newValue){
-    //console.log("update", typeOfUpdate, this.otherPlayer);
+
     switch (typeOfUpdate) {
       case "domage":
         if (this.isDefending) newValue = newValue/2;
@@ -113,11 +108,6 @@ class Player{
         } 
         this.render();
         break;
-      // case "defend":
-      //   this.live -= newValue;
-      //   if (this.live <= 0) return this.gameplay.end(this.otherPlayer);
-      //   this.render();
-      //   break;
       default:
         // statements_def
         break;
@@ -161,7 +151,6 @@ class Player{
   }
 
   moveToCase(newCase){
-    //console.log("moveToCase", newCase);
 
     // hide and remove  position to move
     this.hideMoves(newCase);
@@ -180,17 +169,15 @@ class Player{
   // remove position to move
   hideMoves(newCase){
     const entries = this.availableMoves.length;
-    //console.log(this.availableMoves)
-    //console.log(`new Case is ${newCase}`)
+
     for(let i=0; i< entries; i++){
+      // do nothing 
       if ((this.availableMoves[i].includes(newCase)) ||(this.availableMoves[i].includes(positionPlayers[0])) || (this.availableMoves[i].includes(positionPlayers[1]))  ){
-        //console.log(this.availableMoves[i].includes(newCase))
-        //console.log('player1 ' + this.availableMoves[i].includes(positionPlayers[0]) + ' and' + positionPlayers[0])
-        //console.log('player2  '+this.availableMoves[i].includes(positionPlayers[1]) +' and' + positionPlayers[1])
+     
       }
+      // just cancel move
       else{
         window.cases[this.availableMoves[i]].update("cancelMove");
-        //console.log('pase')
       }
     }
   }

@@ -6,11 +6,11 @@
   }
 
   let DOM = document.createElement('div')
-  //let DOM = $('div').attr('id', 'option')
+  
   DOM.id = 'option'
 
   document.body.appendChild(DOM)
-  //$('body').append(DOM)
+  
 
   function render(){
 
@@ -48,7 +48,7 @@
    * @return {Boolean}     [description]
    */
   function isInTheBoard(row, col){
-    // console.log('isInTheBoard row:',row,"col:",col);
+    
     if (row < 0 || col < 0 || row >= game.row || col >= game.col) return false;
     return true;
   }
